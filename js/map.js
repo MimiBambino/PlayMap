@@ -40,7 +40,7 @@ function initMap() {
   	map: map,
   	title: 'You are here',
   	position: startLoc,
-  	icon: 'img/pinkDino45.png'
+  	icon: 'img/manSm.png'
   });
 }
 
