@@ -5,9 +5,10 @@ var geolocSupport = new Boolean();
 var infowindow;
 
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map-canvas'), {
+  map = new google.maps.Map(document.getElementById('mapDiv'), {
 		zoom: 12,
-		disableDefaultUI: true
+		disableDefaultUI: true,
+		mapTypeId: google.maps.MapTypeId.TERRAIN
 	});
 	infowindow = new google.maps.InfoWindow();
 	//attempt to get current location from: https://developers.google.com/maps/articles/geolocation

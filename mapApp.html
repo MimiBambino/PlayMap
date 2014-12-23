@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Include Google Maps JS API -->
+        <script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk66OnnUZGi8ZxkN8sCH6nS8NwODiQ4V4&sensor=false">
+        </script>
+        <style type="text/css">
+              html { height: 100% }
+              body { height: 100%; margin: 0; }
+              #mapDiv { width: 100%; height: 100%; }
+        </style>
+        <!-- Map creation is here -->
+        <script type="text/javascript">
+              //Defining map as a global variable to access from other functions
+              var map;
+              function initMap () {
+
+                  // Create styles array
+                  var bluishStyle = [
+                      {
+                          stylers: [
+                              { hue: "#00ff99" },
+                              { saturation: -5 },
+                              { lightness: -40 }
+                          ]
+                      },
+                      {
+                          featureType: "all",
+                          elementType: "labels.icon",
+                          stylers: [
+                              {
+                                  "visibility": "off"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative",
+                          elementType: "all",
+                          stylers: [
+                              {
+                                  "visibility": "simplified"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative.country",
+                          elementType: "labels.text",
+                          stylers: [
+                              {
+                                  "visibility": "simplified"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative",
+                          elementType: "labels.icon",
+                          stylers: [
+                              {
+                                  "visibility": "off"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative.country",
+                          elementType: "geometry.fill",
+                          stylers: [
+                              {
+                                  "color": "#ff0000"
+                              },
+                              {
+                                  "visibility": "on"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "road",
+                          elementType: "geometry",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      },
+                      {
+                          featureType: "water",
+                          elementType: "geometry",
+                          stylers: [
+                              { hue: "#0000FF" },
+                              { saturation:-40}
+                          ]
+                      },
+                      {
+                          featureType: "administrative.neighborhood",
+                          elementType: "labels.text.stroke",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      },
+                      {
+                          featureType: "administrative.country",
+                          elementType: "labels.icon",
+                          stylers: [
+                              {
+                                  "visibility": "off"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "road",
+                          elementType: "labels.text",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      },
+                      {
+                          featureType: "road.highway",
+                          elementType: "geometry.fill",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      }
+                  ];
+
+                  //create a new StyledMapType and reference it with the style array
+                  var bluishStyledMap = new google.maps.StyledMapType(bluishStyle,
+                      {name: "Bluish Google Base Maps"});
+              
+
+                    //Enabling new cartography and themes
+
+                    google.maps.visualRefresh = true;
+
+                    //Setting starting options of map
+                    var mapOptions = {
+                          center: new google.maps.LatLng(33.5, 7.6),
+                          zoom: 3,
+                          mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.TERRAIN, 'new_bluish_style']}
+                    };
+
+                    //Getting map DOM element
+                    var mapElement = document.getElementById('mapDiv');
+
+                    //Creating a map with DOM element which is just obtained
+                    map = new google.maps.Map(mapElement, mapOptions);
+
+                    //relate new mapTypeId to the styledMapType object
+                    map.mapTypes.set('new_bluish_style', bluishStyledMap);
+                    //set this new mapTypeId to be displayed
+                    map.setMapTypeId('new_bluish_style');
+              }
+
+              google.maps.event.addDomListener(window, 'load', initMap);
+        </script>
+    </head>
+    <body>
+        <div id="mapDiv"></div>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+{
+  "Algeria": "",
+  "Antarctica": "",
+  "Argentina": "",
+  "Australia": "",
+  "Austria": "",
+  "Belgium": "",
+  "Brazil": "",
+  "Canada": "",
+  "Chile": "",
+  "China": "",
+  "Egypt": "",
+  "England": "",
+  "France": "",
+  "Germany": "",
+  "India": "",
+  "Italy": "",
+  "Japan": "",
+  "Kazakhstan": "",
+  "Lesotho": "",
+  "Madagascar": "",
+  "Malawi": "",
+  "Mongolia": "",
+  "Morocco": "",
+  "Niger": "",
+  "North Africa": "",
+  "Portugal": "",
+  "Romania": "",
+  "Russia": "",
+  "Scotland": "",
+  "South Africa": "",
+  "Spain": "",
+  "Switzerland": "",
+  "Tanzania": "",
+  "Tunisia": "",
+  "Uruguay": [],
+  "USA": [],
+  "Uzbekistan": [
+    {
+      "Archaeornithomimus": {},
+      "Urbacodon": {}
+    }
+  ],
+  "Wales": [
+    {
+      "Pantydraco": {}
+    }
+  ],
+  "Zimbabwe": [
+    {
+      "Euskelosaurus": {}
+    },
+    {
+      "Massospondylus": {}
+    },
+    {
+      "Syntarsus": {}
+    },
+    {
+      "Vulcanodon": {}
+    }
+  ]
+}
