@@ -5,10 +5,114 @@ var geolocSupport = new Boolean();
 var infowindow;
 
 function initMap() {
+
+	var bluishStyle = [
+                      {
+                          stylers: [
+                              { hue: "#00ff99" },
+                              { saturation: -5 },
+                              { lightness: -40 }
+                          ]
+                      },
+                      {
+                          featureType: "all",
+                          elementType: "labels.icon",
+                          stylers: [
+                              {
+                                  "visibility": "off"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative",
+                          elementType: "all",
+                          stylers: [
+                              {
+                                  "visibility": "simplified"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative.country",
+                          elementType: "labels.text",
+                          stylers: [
+                              {
+                                  "visibility": "simplified"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative",
+                          elementType: "labels.icon",
+                          stylers: [
+                              {
+                                  "visibility": "off"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "administrative.country",
+                          elementType: "geometry.fill",
+                          stylers: [
+                              {
+                                  "color": "#ff0000"
+                              },
+                              {
+                                  "visibility": "on"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "road",
+                          elementType: "geometry",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      },
+                      {
+                          featureType: "water",
+                          elementType: "geometry",
+                          stylers: [
+                              { hue: "#0000FF" },
+                              { saturation:-40}
+                          ]
+                      },
+                      {
+                          featureType: "administrative.neighborhood",
+                          elementType: "labels.text.stroke",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      },
+                      {
+                          featureType: "administrative.country",
+                          elementType: "labels.icon",
+                          stylers: [
+                              {
+                                  "visibility": "off"
+                              }
+                          ]
+                      },
+                      {
+                          featureType: "road",
+                          elementType: "labels.text",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      },
+                      {
+                          featureType: "road.highway",
+                          elementType: "geometry.fill",
+                          stylers: [
+                              { visibility: "off" }
+                          ]
+                      }
+                  ];
   map = new google.maps.Map(document.getElementById('mapDiv'), {
-		zoom: 12,
+		zoom: 3,
 		disableDefaultUI: true,
-		mapTypeId: google.maps.MapTypeId.TERRAIN
+		mapTypeId: google.maps.MapTypeId.TERRAIN,
+		styles: bluishStyle
 	});
 	infowindow = new google.maps.InfoWindow();
 	//attempt to get current location from: https://developers.google.com/maps/articles/geolocation
@@ -124,7 +228,7 @@ function markAddress(venue) {
 					}
 					else {
 						//location could not be found
-						console.log("location not found: " + venue);
+						//console.log("location not found: " + venue);
 					}
 				}
 				else {

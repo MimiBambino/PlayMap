@@ -122,7 +122,7 @@
 
                   //create a new StyledMapType and reference it with the style array
                   var bluishStyledMap = new google.maps.StyledMapType(bluishStyle,
-                      {name: "Bluish Google Base Maps"});
+                      {name: "Bluish Map"});
               
 
                     //Enabling new cartography and themes
@@ -146,6 +146,33 @@
                     map.mapTypes.set('new_bluish_style', bluishStyledMap);
                     //set this new mapTypeId to be displayed
                     map.setMapTypeId('new_bluish_style');
+              }
+
+              function addIconMarker() {
+                  var data, icon; // Data is the outside date from firebase
+                  var dataLength = data.length;
+
+                  for (var i = 0; i < dataLength, i++) {
+                      // Assumes that the data has a property `type` that is either 'Meat Eater',
+                      // 'Plant Eater' or 'Omnivore'
+                      if (data[i].type ==='Meat Eater') {
+                          icon = 'img/tRex.png';
+                      } else if (data[i].type === 'Omnivore') {
+                          icon = 'img/pinkDino45.png';
+                      } else if (data[i].type === 'Plant Eater') {
+                          icon = 'img/plantEater.png';
+                      }
+
+                      var marker = new google.maps.Marker({
+                        // Assumes that the data has a property `position` that is the coordinates
+                        // of where the fossil was found
+                        position: data[i].position,
+                        // Assumes that the data has a property `species` that is the species of 
+                        // dinosaur; e.g. Brontosaurus, Stegasaurus, etc.
+                        title: data[i].species,
+                        icon: icon
+                      });
+                  }
               }
 
               google.maps.event.addDomListener(window, 'load', initMap);

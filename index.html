@@ -13,8 +13,7 @@
   <body>
     <div id="mapDiv"></div>
     <div id="location-search">
-      <input data-bind="value: location" type="text" placeholder="enter a city">
-      <div data-bind="visible: locationError" class="error">location not found</div>
+      <input id='cityInput' data-bind="value: location" type="text" placeholder="Enter Your City">
     </div>
     <div data-bind="visible: results().length > 0" id="info-window">
       <div id="result-search">
