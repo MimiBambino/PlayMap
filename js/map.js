@@ -321,29 +321,3 @@ function MapViewModel() {
 $(document).ready(function() {
 	ko.applyBindings(new MapViewModel());
 });
-	/*
-TODO: add hours to infowindow?
-		price range?
-
-	gulp build
-
-	entries have:
-	
-			phone
-
-			price_range
-			hours
-							[
-							    {
-							        days  => 'Mon - Fri',
-							        hours => ['10:30am - 2pm', '5pm - 10pm']
-							    },
-							    {
-							        days  => 'Sat - Sun',
-							        hours => ['closed']
-							    }
-							]
-
-			images
-
-	*/
