@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--<script type="text/javascript"
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk66OnnUZGi8ZxkN8sCH6nS8NwODiQ4V4&sensor=false">
+        </script>-->
+            <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/knockout.js"></script>
+        <style type="text/css">
+              html { height: 100% }
+              body { height: 100%; margin: 0; }
+              #mapDiv { width: 100%; height: 100%; }
+        </style>
+        <link rel="stylesheet" type="text/css" href="css/mapstyle.css">
+        <script>
+            function initialize() {
+                var mapProp = {
+                    center: new google.maps.LatLng(40, 14),
+                    zoom: 4,
+                    mapTypeId: google.maps.MapTypeId.TERRAIN
+                };
+                var map = new google.maps.Map(document.getElementById("mapDiv"), mapProp);
+            }
+            
+            function addLocation() {
+                var marker = new google.maps.Marker({
+                    position: center,
+                    icon: "img/manSm.png"
+                });
+                marker.setMap(map);
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+            addLocation();
+        </script>
+
+    </head>
+    <body>
+        <div id="mapDiv">
+          
+        </div>
+        <div id="location-search">
+            <input id='cityInput' type="text" placeholder="Enter Your City">
+        </div>
+        <!--<script type="text/javascript" src="js/app.js"></script>-->
+        <img src="img/powered-by-google.png" alt="powered by google">
+    </body>
+</html>

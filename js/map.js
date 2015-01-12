@@ -300,18 +300,13 @@ function MapViewModel() {
 					m.marker.setMap(null);
 				});
 				self.results.removeAll();
-				//retrieve results from VegGuide
-				var apiQuery = "http://www.vegguide.org/search/by-lat-long/" + loc.lat() + "," + loc.lng();
-				$.getJSON(apiQuery, function(data) {
-					data.entries.forEach(function(c) {
-							markAddress(c);
-					});
-				});
+				console.log("Loc is: " + loc);
 				return loc;
 			}
 			else {
 				//could not find location based on search
 				self.locationError(true);
+				console.log("startLoc is: " + startLoc);
 				return startLoc;
 			}
 

@@ -3,8 +3,10 @@
     <head>
         <!-- Include Google Maps JS API -->
         <script type="text/javascript"
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk66OnnUZGi8ZxkN8sCH6nS8NwODiQ4V4&sensor=false">
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk66OnnUZGi8ZxkN8sCH6nS8NwODiQ4V4&sensor=false&libraries=places">
         </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="js/knockout.js"></script>
         <style type="text/css">
               html { height: 100% }
               body { height: 100%; margin: 0; }
@@ -12,75 +14,20 @@
         </style>
         <link rel="stylesheet" type="text/css" href="css/mapstyle.css">
         <!-- Map creation is here -->
-        <script type="text/javascript">
-              //Defining map as a global variable to access from other functions
-              var map;
-              function initMap () {
+        <script>
 
-                  //create a new StyledMapType and reference it with the style array
-                  var bluishStyledMap = new google.maps.StyledMapType(bluishStyle,
-                      {name: "Bluish Map"});
-              
-
-                    //Enabling new cartography and themes
-
-                    google.maps.visualRefresh = true;
-
-                    //Setting starting options of map
-                    var mapOptions = {
-                          center: new google.maps.LatLng(33.5, 7.6),
-                          zoom: 3,
-                          mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.TERRAIN, 'new_bluish_style']}
-                    };
-
-                    //Getting map DOM element
-                    var mapElement = document.getElementById('mapDiv');
-
-                    //Creating a map with DOM element which is just obtained
-                    map = new google.maps.Map(mapElement, mapOptions);
-
-                    //relate new mapTypeId to the styledMapType object
-                    map.mapTypes.set('new_bluish_style', bluishStyledMap);
-                    //set this new mapTypeId to be displayed
-                    map.setMapTypeId('new_bluish_style');
-              }
-
-              function addIconMarker() {
-                  var data, icon; // Data is the outside date from firebase
-                  var dataLength = data.length;
-
-                  for (var i = 0; i < dataLength; i++) {
-                      // Assumes that the data has a property `type` that is either 'Meat Eater',
-                      // 'Plant Eater' or 'Omnivore'
-                      if (data[i].type ==='Meat Eater') {
-                          icon = 'img/tRex.png';
-                      } else if (data[i].type === 'Omnivore') {
-                          icon = 'img/pinkDino45.png';
-                      } else if (data[i].type === 'Plant Eater') {
-                          icon = 'img/plantEater.png';
-                      }
-
-                      var marker = new google.maps.Marker({
-                        // Assumes that the data has a property `position` that is the coordinates
-                        // of where the fossil was found
-                        position: data[i].position,
-                        // Assumes that the data has a property `species` that is the species of 
-                        // dinosaur; e.g. Brontosaurus, Stegasaurus, etc.
-                        title: data[i].species,
-                        icon: icon
-                      });
-                  }
-              }
-
-              google.maps.event.addDomListener(window, 'load', initMap);
         </script>
+
     </head>
     <body>
         <div id="mapDiv">
-          
+          <ul data-bind="foreach: dinoList">
+            <li></li>
+          </ul>
         </div>
         <div id="location-search">
-            <input id='cityInput' data-bind="value: location" type="text" placeholder="Enter Your City">
+            <input id='cityInput' data-bind="value: location" placeholder="Enter Your City">
         </div>
+        <script type="text/javascript" src="js/app.js"></script>
     </body>
 </html>
