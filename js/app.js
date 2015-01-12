@@ -1,5 +1,6 @@
-var map, youAreHere, geoCoder, infoWindow;
+var map, geoCoder, infoWindow;
 var startLoc = new google.maps.LatLng(33.5, 7.6);
+var person = false;
 
 function handleNoGeo(errorFlag) {
 	if(errorFlag == true) {
@@ -579,39 +580,69 @@ var Dino = function(data) {
 		} else if (this.food === 'omnivore') {
 			return 'img/pinkDino45.png';
 		} else if (this.food === 'herbivore') {
-			return 'img/plantEater.png';
+			return 'img/plantEaterSm.png';
 		}
 	}, this);
 }
 
 var ViewModel = function() {
+	// save a reference to ViewModel object
 	var self = this;
 
-	this.dinoList = ko.observableArray([]);
+	// if user has not searched yet, don't display any icons
+	this.search = false;
 
-	this.filteredDinoList = [];
-
+	// copy of all dinoData
+	this.dinoList = [];
 	dinoData.forEach(function(item) {
 		self.dinoList.push( new Dino(item) );
 	});
+
+	// enable filtering later  Fpr now it pust 10 dinosaurs in list
+	// later this should find the closest dinosaurs and only add them to the list
+	this.filteredDinoList = ko.observableArray();
+
+	this.filterDinos = ko.computed(function() {
+		if (self.search) {
+			var num = 0;
+			while ( self.filteredDinoList.length < 10 ) {
+				self.filteredDinoList.push(this.DinoList[num]);
+				num++;
+			}
+		}
+	});
 	
+	// watch for user input
 	this.location = ko.observable("");
 
 	this.getLocation = ko.computed(function() {
 		geocoder = new google.maps.Geocoder();
 		geocoder.geocode( {address: self.location()}, function(results,status) {
-			//check if geocode was succesful
+			//check if geocode was successful
 			if (status == google.maps.GeocoderStatus.OK) {
+				// if user's icon is already displayed, remove it from the screen
+				if (person) {
+					personMarker.setMap(null);
+				}
+				// set true to indicate a search has been performed and to display markers
+				self.search = true;
+
+				// take the first result from the returned array
 				var loc = results[0].geometry.location;
 				//center map and display marker
 				map.setCenter(loc);
 				map.setZoom(5);
-			//	self.createDinoMarkers();
-				var marker = new google.maps.Marker({
+				self.newDinoMarker();
+				//self.createDinoMarkers(self.dinoList);
+				personMarker = new google.maps.Marker({
             		map: map,
-            		position: results[0].geometry.location,
+            		position: loc,
             		icon: 'img/manSm.png'
        			});
+       			self.location("");
+
+       			// this indicates that the user's icon is displayed
+       			person = true;
 				return loc;
 			}
 			else {
@@ -622,22 +653,29 @@ var ViewModel = function() {
 		});
 	});
 
-	this.createDinoMarkers = function() {
-		self.dinoList.forEach(function(dino) {
-			console.log("createMarker called");
-			for (var i = 0; i < dino.locations.length; i++) {
+	this.newDinoMarker = function () {
+        var coordinate = new google.maps.LatLng(41.863866, 122.444806);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: coordinate,
+            icon: "img/plantEaterSm.png"
+          });
+        };
+
+	this.createDinoMarkers = ko.computed(function() {
+		for (var i = 0; i < self.dinoList.length; i++) {
+			var dino = self.dinoList[i];
+			for (var j = 0; j < dino.locations().length; j++){
+				var la = dino.locations()[j][0];
+				var lo = dino.locations()[j][1];
 				var marker = new google.maps.Marker({
-        // Assumes that the data has a property `position` that is the coordinates
-        // of where the fossil was found
-        		position: dino.locations[i],
-        // Assumes that the data has a property `species` that is the species of 
-        // dinosaur; e.g. Brontosaurus, Stegasaurus, etc.
-        		title: dino.species,
-        		icon: dino.icon
+					map: map,
+        		    position: new google.maps.LatLng(la, lo),
+        		    icon: "img/plantEater.png"
         		});
-			};
-		});
-	};
+			}
+		}
+	}, this);
 
 	this.init = function() {
 		google.maps.event.addDomListener(window, 'load', self.initMap);
