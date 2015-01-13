@@ -261,7 +261,7 @@ var dinoData = [
 		{
 			"name": "Psittacosaurus",
 			"continents": ["Asia"],
-			"latLongs": ["China", [45.000968, 101.615546], [54.004873, 99.835938], [15.656951, 102.885368]],
+			"latLongs": [[36.356345, 115.693728], [45.000968, 101.615546], [54.004873, 99.835938], [15.656951, 102.885368]],
 			"food": "herbivore",
 			"description": "Ceratopsians--the horned, frilled dinosaurs--are among the most recognizable creatures in the history of our planet, but not so their earliest ancestors, of which Psittacosaurus is the most famous example. This tiny, possibly bipedal plant-eater possessed a tortoise-like head with only the faintest hint of a frill; to look at it, you would not know what type of dinosaur it was destined to evolve into."
 		},
@@ -575,11 +575,11 @@ var Dino = function(data) {
 	this.description = ko.observable(data.description);
 
 	this.icon = ko.computed(function() {
-		if (this.food === 'carnivore') {
+		if (this.food() === 'carnivore') {
 			return 'img/tRex.png';
-		} else if (this.food === 'omnivore') {
-			return 'img/pinkDino45.png';
-		} else if (this.food === 'herbivore') {
+		} else if (this.food() === 'omnivore') {
+			return 'img/blueDino41.png';
+		} else if (this.food() === 'herbivore') {
 			return 'img/plantEaterSm.png';
 		}
 	}, this);
@@ -632,8 +632,9 @@ var ViewModel = function() {
 				//center map and display marker
 				map.setCenter(loc);
 				map.setZoom(5);
-				self.newDinoMarker();
+				self.createDinoMarkers();
 				//self.createDinoMarkers(self.dinoList);
+				//self.newDinoMarker();
 				personMarker = new google.maps.Marker({
             		map: map,
             		position: loc,
@@ -653,29 +654,28 @@ var ViewModel = function() {
 		});
 	});
 
-	this.newDinoMarker = function () {
-        var coordinate = new google.maps.LatLng(41.863866, 122.444806);
-        var marker = new google.maps.Marker({
-            map: map,
-            position: coordinate,
-            icon: "img/plantEaterSm.png"
-          });
-        };
+	this.dinoMarkers = ko.observableArray();
 
-	this.createDinoMarkers = ko.computed(function() {
+	this.createDinoMarkers = function() {
 		for (var i = 0; i < self.dinoList.length; i++) {
 			var dino = self.dinoList[i];
 			for (var j = 0; j < dino.locations().length; j++){
-				var la = dino.locations()[j][0];
-				var lo = dino.locations()[j][1];
+				var icon = dino.icon();
+				var lat = dino.locations()[j][0];
+				var lon = dino.locations()[j][1];
 				var marker = new google.maps.Marker({
 					map: map,
-        		    position: new google.maps.LatLng(la, lo),
-        		    icon: "img/plantEater.png"
+        		    position: {
+        		    	lat: lat,
+        		    	lng: lon
+        		    },
+        		    icon: icon
         		});
+        		self.dinoMarkers.push(marker);
 			}
 		}
-	}, this);
+				console.log(self.dinoMarkers);
+	};
 
 	this.init = function() {
 		google.maps.event.addDomListener(window, 'load', self.initMap);
@@ -694,7 +694,9 @@ var ViewModel = function() {
         var mapOptions = {
             center: new google.maps.LatLng(33.5, 7.6),
             zoom: 3,
-            mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.TERRAIN, 'new_bluish_style']}
+            mapTypeControlOptions: {mapTypeIds: [google.maps.MapTypeId.TERRAIN, 'new_bluish_style']},
+            maxZoom: 12,
+            minZoom: 3
             };
 
         //Getting map DOM element
