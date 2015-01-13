@@ -468,7 +468,9 @@ var View = {
 	bluishMapStyle: [
 	    {
 	        stylers: [
-	            { hue: "#00ff99" },
+	            //{ hue: "#00ff99" },
+	            //{ hue: "#00ad0e" },
+	            { hue: "#00940c" },
 	            { saturation: -5 },
 	            { lightness: -40 }
 	        ]
@@ -687,7 +689,7 @@ var ViewModel = function() {
  			});
  			google.maps.event.addListener(marker, 'click', (function(marker) {
  				return function() {
- 					infowindow.setContent("<h3>" + marker.title + "</h3>");
+ 					infowindow.setContent("<div class='infoWindow'><h3>" + marker.title + "</h3></div>");
    					infowindow.open(map, marker);
    				};
   			})(marker));	
