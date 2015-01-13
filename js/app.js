@@ -654,7 +654,7 @@ var ViewModel = function() {
 		});
 	});
 
-	this.dinoMarkers = ko.observableArray();
+	this.dinoMarkers = [];
 
 	this.createDinoMarkers = function() {
 		for (var i = 0; i < self.dinoList.length; i++) {
@@ -669,12 +669,29 @@ var ViewModel = function() {
         		    	lat: lat,
         		    	lng: lon
         		    },
-        		    icon: icon
+        		    icon: icon,
+        		    title: dino.name()
         		});
         		self.dinoMarkers.push(marker);
 			}
 		}
-				console.log(self.dinoMarkers);
+		console.log(self.dinoMarkers);
+		self.createInfoWindows();	
+	};
+
+	this.createInfoWindows = function(){
+		for (var i = 0; i < self.dinoMarkers.length; i++) {
+			var marker = self.dinoMarkers[i];
+			var infowindow = new google.maps.InfoWindow({
+      			content: ""
+ 			});
+ 			google.maps.event.addListener(marker, 'click', (function(marker) {
+ 				return function() {
+ 					infowindow.setContent("<h3>" + marker.title + "</h3>");
+   					infowindow.open(map, marker);
+   				};
+  			})(marker));	
+		}
 	};
 
 	this.init = function() {
