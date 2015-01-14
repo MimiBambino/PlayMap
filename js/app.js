@@ -685,16 +685,33 @@ var ViewModel = function() {
 		for (var i = 0; i < self.dinoMarkers.length; i++) {
 			var marker = self.dinoMarkers[i];
 			var infowindow = new google.maps.InfoWindow({
-      			content: ""
+      			content: "",
+      			title: marker.title
  			});
  			google.maps.event.addListener(marker, 'click', (function(marker) {
  				return function() {
- 					infowindow.setContent("<div class='infoWindow'><h3>" + marker.title + "</h3></div>");
+ 					infowindow.setContent("<div class='infoWindow'><h3>Hi, my name is " + marker.title + "!</h3></div>");
    					infowindow.open(map, marker);
-   				};
-  			})(marker));	
-		}
+   					self.dinoDataRequest(marker);
+    				};
+   				})(marker));
+ 		}
 	};
+
+	this.dinoDataRequest = function(marker){
+    	var url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=";
+    	url += marker.title;
+
+    	$.ajax( {
+    		url: url,
+    		//data: queryData,
+    		dataType:'json',
+    		type:'GET',
+    		headers: { 'Api-User-Agent': "Cynthia O\'Donnell: mimibambino@gmail.com" }
+			} ).done(function() {
+				infowindow.setContent("Ajax returned");
+			});
+    };
 
 	this.init = function() {
 		google.maps.event.addDomListener(window, 'load', self.initMap);
