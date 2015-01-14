@@ -656,7 +656,10 @@ var ViewModel = function() {
 		});
 	});
 
-	this.dinoMarkers = [];
+	this.allDinoMarkers = [];
+	this.carnivoreMarkers = [];
+	this.omnivoreMarkers = [];
+	this.herbivoreMarkers = [];
 
 	this.createDinoMarkers = function() {
 		for (var i = 0; i < self.dinoList.length; i++) {
@@ -674,16 +677,23 @@ var ViewModel = function() {
         		    icon: icon,
         		    title: dino.name()
         		});
-        		self.dinoMarkers.push(marker);
+        		if (dino.food() == 'carnivore') {
+        			self.carnivoreMarkers.push(marker);
+        		} else if (dino.food() == 'herbivore') {
+        			self.herbivoreMarkers.push(marker);
+        		} else if (dino.food() == 'omnivore') {
+        			self.omnivoreMarkers.push(marker);
+        		}
+        		self.allDinoMarkers.push(marker);
 			}
 		}
-		console.log(self.dinoMarkers);
+		console.log(self.carnivoreMarkers);
 		self.createInfoWindows();	
 	};
 
 	this.createInfoWindows = function(){
-		for (var i = 0; i < self.dinoMarkers.length; i++) {
-			var marker = self.dinoMarkers[i];
+		for (var i = 0; i < self.allDinoMarkers.length; i++) {
+			var marker = self.allDinoMarkers[i];
 			var infowindow = new google.maps.InfoWindow({
       			content: "",
       			title: marker.title
@@ -705,9 +715,18 @@ var ViewModel = function() {
     	$.ajax( {
     		url: url,
     		//data: queryData,
-    		dataType:'json',
+    		xhrFields: {
+      			withCredentials: true
+   			},
+    		dataType:'jsonp',
+    		success: function(response){
+    			console.log(response);
+    		},
     		type:'GET',
-    		headers: { 'Api-User-Agent': "Cynthia O\'Donnell: mimibambino@gmail.com" }
+    		headers: { 
+    			'Api-User-Agent': "Cynthia O\'Donnell: mimibambino@gmail.com",
+    			'Access-Control-Allow-Origin': true
+    		 }
 			} ).done(function() {
 				infowindow.setContent("Ajax returned");
 			});
