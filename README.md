@@ -2,7 +2,7 @@ Project 5 of the Udacity Frontend Nanodegree
 
 Find out which dinosaurs lived in your neck of the woods.
 
-Can be viewed at http://mimibambino.github.io/Map/
+Can be viewed at http://mimibambino.github.io/PlayMap/
 
 Instructions
 ================
