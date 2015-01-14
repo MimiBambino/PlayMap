@@ -721,9 +721,12 @@ var ViewModel = function() {
     		success: function(response){
     			var keys = Object.keys(response.query.pages);
     			var key = parseInt(keys[0], 10);
-    			var paragraph = response.query.pages[key].extract;
+    			var paragraph = response.query.pages[key].extract.substring(0,300);
     			console.log(response);
-    			infowindow.setContent("<div class='infoWindow'><h3>Hi, my name is " + marker.title + "!</h3></div><div>" + paragraph + "</div>");
+    			infowindow.setContent("<div class='infoWindow'><h3>Hi, my name is " + marker.title + "!</h3></div><div>" + paragraph + "...</p></div><div>For more see: <a href='http://www.wikipedia.org/wiki/" + marker.title + "' target='_blank'>Wikipedia</a></div>");
+    			//$.ajax({
+    			//	url: "http://en.wikipedia.org/w/api.php?action=query&titles=Al-Farabi&prop=pageimages&format=json&pithumbsize=100"
+    			//})
     		},
     		type:'GET',
     		headers: { 
